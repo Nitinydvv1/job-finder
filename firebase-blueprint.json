@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "Resume": {
+      "title": "Resume",
+      "description": "A parsed resume with semantic embedding",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner of the resume" },
+        "fileName": { "type": "string", "description": "Original file name" },
+        "parsedJson": { "type": "object", "description": "Structured resume data" },
+        "embedding": { "type": "array", "description": "Vector embedding (1536 dims)" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "fileName", "parsedJson", "embedding", "createdAt"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "A job posting with semantic embedding",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "company": { "type": "string" },
+        "description": { "type": "string" },
+        "location": { "type": "string" },
+        "embedding": { "type": "array", "description": "Vector embedding (1536 dims)" },
+        "sourceUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "company", "description", "embedding", "createdAt"]
+    },
+    "SavedJob": {
+      "title": "SavedJob",
+      "description": "A job saved by a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "jobId": { "type": "string" },
+        "savedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "jobId", "savedAt"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile and roles",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "A job application submitted by a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "jobId": { "type": "string" },
+        "resumeId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "reviewed", "accepted", "rejected"] },
+        "appliedAt": { "type": "string", "format": "date-time" },
+        "coverLetter": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["userId", "jobId", "resumeId", "status", "appliedAt"]
+    }
+  },
+  "firestore": {
+    "/resumes/{resumeId}": {
+      "schema": "Resume",
+      "description": "Stored resumes"
+    },
+    "/jobs/{jobId}": {
+      "schema": "Job",
+      "description": "Stored job postings"
+    },
+    "/saved_jobs/{savedJobId}": {
+      "schema": "SavedJob",
+      "description": "Jobs saved by users"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/applications/{applicationId}": {
+      "schema": "Application",
+      "description": "Job applications"
+    }
+  }
+}

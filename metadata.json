@@ -1,0 +1,5 @@
+{
+  "name": "AI Resume Matcher",
+  "description": "A production-ready AI system that matches resumes to job descriptions using structured parsing and semantic similarity.",
+  "requestFramePermissions": []
+}
