@@ -7,3 +7,4 @@ coverage/
 .env*
 !.env.example
 .git_corrupt_backup_*
+firebase-applet-config.json
