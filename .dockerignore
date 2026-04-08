@@ -1,0 +1,14 @@
+node_modules
+dist
+build
+coverage
+.git
+.gitignore
+.github
+.git_corrupt_backup_*
+uploads
+.env
+.env.local
+.env.*
+!.env.example
+npm-debug.log*
