@@ -1,12 +1,23 @@
-FROM node:20-alpine AS base
-WORKDIR /app
+# FROM gcr.io/distroless/nodejs24-debian13 as builder
 
-COPY package.json package-lock.json ./
-RUN npm ci
+FROM node:24-slim as builder
+
+WORKDIR /flow
+
+COPY package*.json ./
+
+RUN npm ci 
 
 COPY . .
+
 RUN npm run build
 
-ENV NODE_ENV=production
-EXPOSE 3000
-CMD ["npm", "run", "start"]
+FROM nginx:alpine
+
+COPY --from=builder /flow/dist /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
